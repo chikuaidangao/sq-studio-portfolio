@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQ STUDIO — Creative Designer</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-left">
+      <a href="#hero" class="nav-logo">
+        <span>SQ STUDIO</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-links" id="nav-links">
+        <a href="#work" class="nav-link" data-section="work">作品</a>
+        <a href="#services" class="nav-link" data-section="services">服务</a>
+        <a href="#video" class="nav-link" data-section="video">视频</a>
+        <a href="#models" class="nav-link" data-section="models">模型</a>
+        <a href="#ui" class="nav-link" data-section="ui">UI</a>
+        <a href="#about" class="nav-link" data-section="about">关于</a>
+      </div>
+      <a href="#contact" class="nav-contact">联系我们</a>
+      <div class="nav-menu-btn" id="menu-btn">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu-inner">
+      <a href="#work" class="mobile-link">作品</a>
+      <a href="#services" class="mobile-link">服务</a>
+      <a href="#video" class="mobile-link">视频</a>
+      <a href="#models" class="mobile-link">模型</a>
+      <a href="#ui" class="mobile-link">UI</a>
+      <a href="#about" class="mobile-link">关于</a>
+      <a href="#contact" class="mobile-link mobile-link-cta">联系我们</a>
+    </div>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="assets/hero-dark.jpg" alt="">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-location">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        <span>based in Shanghai</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="hero-line">We Pick Up</span>
+        <span class="hero-line">What Others</span>
+        <span class="hero-line hero-line-accent">Miss</span>
+      </h1>
+      <p class="hero-subtitle">
+        拾起被忽略的灵感，重构品牌的表达
+      </p>
+      <div class="hero-scroll">
+        <span>SCROLL</span>
+        <div class="scroll-line-wrap">
+          <div class="scroll-line"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WORK — Horizontal Scroll ==================== -->
+  <section class="section-work" id="work">
+    <div class="work-header">
+      <div class="work-header-sticky">
+        <h2 class="work-title reveal-text">
+          <span>"work"</span>
+        </h2>
+        <div class="work-counter">
+          <span class="work-counter-current">01</span>
+          <span class="work-counter-sep">/</span>
+          <span class="work-counter-total">08</span>
+        </div>
+      </div>
+    </div>
+    <div class="work-track" id="work-track">
+      <!-- Work Item 1 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-1.jpg" alt="Luxury Timepiece" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Commercial</span>
+          <h3 class="work-name">Chronos 奢侈腕表</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 2 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-2.jpg" alt="Dark Architecture" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Architecture</span>
+          <h3 class="work-name">混凝土诗学</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 3 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-3.jpg" alt="Portrait" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Portrait</span>
+          <h3 class="work-name">面孔 · 创作者</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 4 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-4.jpg" alt="Light Art" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Installation</span>
+          <h3 class="work-name">光的边界</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 5 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-5.jpg" alt="Fashion" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Fashion</span>
+          <h3 class="work-name">暗夜高定</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 6 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-6.jpg" alt="Automotive" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Automotive</span>
+          <h3 class="work-name">速度与影</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 7 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-7.jpg" alt="3D Product" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">3D Render</span>
+          <h3 class="work-name">未来造物</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Work Item 8 -->
+      <div class="work-item">
+        <div class="work-img">
+          <img src="assets/work-8.jpg" alt="Beverage" loading="lazy">
+          <div class="work-img-overlay"></div>
+        </div>
+        <div class="work-info">
+          <span class="work-category">Branded</span>
+          <h3 class="work-name">微醺美学</h3>
+          <svg class="work-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H7M17 7V17"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="work-view-all">
+      <a href="#" class="work-view-all-btn">
+        <span>View All</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section class="section-services" id="services">
+    <div class="services-content">
+      <div class="services-text">
+        <h2 class="services-heading reveal-text">
+          <span>A creative</span><br>
+          <span>partner for</span><br>
+          <span class="text-accent">brands</span><br>
+          <span>And agencies</span>
+        </h2>
+      </div>
+      <div class="services-list">
+        <div class="service-row reveal-up">
+          <span class="service-num">01</span>
+          <h3 class="service-name">品牌视觉</h3>
+          <p class="service-desc">从 Logo 到完整品牌体系，构建独特的视觉语言</p>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row reveal-up">
+          <span class="service-num">02</span>
+          <h3 class="service-name">UI/UX 设计</h3>
+          <p class="service-desc">以用户为中心的界面设计，兼顾美感与可用性</p>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row reveal-up">
+          <span class="service-num">03</span>
+          <h3 class="service-name">3D 可视化</h3>
+          <p class="service-desc">产品建模与场景渲染，呈现超现实的视觉体验</p>
+          <span class="service-arrow">→</span>
+        </div>
+        <div class="service-row reveal-up">
+          <span class="service-num">04</span>
+          <h3 class="service-name">动态设计</h3>
+          <p class="service-desc">品牌动画与交互原型，赋予设计生命力</p>
+          <span class="service-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== VIDEO ==================== -->
+  <section class="section-video" id="video">
+    <div class="section-label reveal-text">
+      <span class="label-line"></span>
+      <span>Motion Design</span>
+    </div>
+    <h2 class="section-big-title reveal-text">视频作品</h2>
+    <div class="video-grid">
+      <div class="video-card reveal-up">
+        <div class="video-thumb">
+          <img src="assets/video-thumb-1.jpg" alt="Motion Graphics" loading="lazy">
+          <div class="video-play-overlay">
+            <div class="play-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <polygon points="6 3 20 12 6 21 6 3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="video-duration">01:24</div>
+        </div>
+        <div class="video-meta">
+          <span class="video-tag">动态图形</span>
+          <h3>品牌视觉动画 — Lumière</h3>
+          <p>为奢侈品牌打造的视觉动画系统，融合几何美学与流畅动效</p>
+        </div>
+      </div>
+      <div class="video-card reveal-up">
+        <div class="video-thumb">
+          <img src="assets/video-thumb-2.jpg" alt="Logo Animation" loading="lazy">
+          <div class="video-play-overlay">
+            <div class="play-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <polygon points="6 3 20 12 6 21 6 3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="video-duration">00:45</div>
+        </div>
+        <div class="video-meta">
+          <span class="video-tag">Logo 动画</span>
+          <h3>Maison 品牌标识演绎</h3>
+          <p>极简线条勾勒品牌精神，优雅而克制的动态表达</p>
+        </div>
+      </div>
+      <div class="video-card reveal-up">
+        <div class="video-thumb">
+          <img src="assets/video-thumb-3.jpg" alt="UI Animation" loading="lazy">
+          <div class="video-play-overlay">
+            <div class="play-circle">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <polygon points="6 3 20 12 6 21 6 3"/>
+              </svg>
+            </div>
+          </div>
+          <div class="video-duration">02:10</div>
+        </div>
+        <div class="video-meta">
+          <span class="video-tag">UI 动效</span>
+          <h3>金融 App 交互原型</h3>
+          <p>流畅的微交互设计，提升用户体验的每一个触点</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3D MODELS ==================== -->
+  <section class="section-models" id="models">
+    <div class="section-label reveal-text">
+      <span class="label-line"></span>
+      <span>3D Visualization</span>
+    </div>
+    <h2 class="section-big-title reveal-text">3D 模型</h2>
+    <div class="models-showcase">
+      <div class="model-card reveal-up" data-tilt>
+        <div class="model-viewport">
+          <img src="assets/model-1.jpg" alt="3D Vase" loading="lazy">
+          <div class="model-glow"></div>
+        </div>
+        <div class="model-info">
+          <div class="model-info-top">
+            <span class="model-cat">产品设计</span>
+            <span class="model-badge">360°</span>
+          </div>
+          <h3>极简陶瓷花瓶</h3>
+          <p>Blender · Octane Render</p>
+        </div>
+      </div>
+      <div class="model-card reveal-up" data-tilt>
+        <div class="model-viewport">
+          <img src="assets/model-2.jpg" alt="3D Headphone" loading="lazy">
+          <div class="model-glow"></div>
+        </div>
+        <div class="model-info">
+          <div class="model-info-top">
+            <span class="model-cat">工业设计</span>
+            <span class="model-badge">360°</span>
+          </div>
+          <h3>无线降噪耳机</h3>
+          <p>Cinema 4D · Redshift</p>
+        </div>
+      </div>
+      <div class="model-card reveal-up" data-tilt>
+        <div class="model-viewport">
+          <img src="assets/model-3.jpg" alt="3D Architecture" loading="lazy">
+          <div class="model-glow"></div>
+        </div>
+        <div class="model-info">
+          <div class="model-info-top">
+            <span class="model-cat">建筑可视化</span>
+            <span class="model-badge">360°</span>
+          </div>
+          <h3>极简主义展亭</h3>
+          <p>Rhino · V-Ray</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== UI DESIGN ==================== -->
+  <section class="section-ui" id="ui">
+    <div class="section-label reveal-text">
+      <span class="label-line"></span>
+      <span>Interface Design</span>
+    </div>
+    <h2 class="section-big-title reveal-text">UI 设计</h2>
+    <div class="ui-showcase">
+      <div class="ui-card reveal-up">
+        <div class="ui-mockup">
+          <div class="ui-browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">www.luxfinance.app</div>
+          </div>
+          <div class="ui-screen">
+            <img src="assets/ui-showcase-1.jpg" alt="Mobile App UI" loading="lazy">
+          </div>
+        </div>
+        <div class="ui-info">
+          <div class="ui-tags">
+            <span>Mobile App</span>
+            <span>Fintech</span>
+            <span>iOS</span>
+          </div>
+          <h3>LuxFinance — 智能理财 App</h3>
+          <p>为高端用户打造的智能理财应用，极简界面搭配精致的数据可视化</p>
+        </div>
+      </div>
+      <div class="ui-card ui-card-alt reveal-up">
+        <div class="ui-mockup">
+          <div class="ui-browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">dashboard.analytics.io</div>
+          </div>
+          <div class="ui-screen">
+            <img src="assets/ui-showcase-2.jpg" alt="Dashboard UI" loading="lazy">
+          </div>
+        </div>
+        <div class="ui-info">
+          <div class="ui-tags">
+            <span>Dashboard</span>
+            <span>SaaS</span>
+            <span>Web App</span>
+          </div>
+          <h3>DataViz — 数据分析平台</h3>
+          <p>企业级数据分析仪表盘，清晰的信息层级与优雅的图表设计</p>
+        </div>
+      </div>
+      <div class="ui-card reveal-up">
+        <div class="ui-mockup">
+          <div class="ui-browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url">www.maison-atelier.com</div>
+          </div>
+          <div class="ui-screen">
+            <img src="assets/ui-showcase-3.jpg" alt="Website UI" loading="lazy">
+          </div>
+        </div>
+        <div class="ui-info">
+          <div class="ui-tags">
+            <span>Website</span>
+            <span>E-commerce</span>
+            <span>Luxury</span>
+          </div>
+          <h3>Maison Atelier — 奢侈品电商</h3>
+          <p>高端时尚品牌电商网站，沉浸式的购物体验与精致的视觉呈现</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="section-about" id="about">
+    <div class="about-split">
+      <div class="about-visual">
+        <div class="about-img-wrap reveal-up">
+          <img src="assets/about-dark.jpg" alt="Studio">
+        </div>
+        <div class="about-stats">
+          <div class="about-stat reveal-up">
+            <span class="about-stat-num" data-count="150">0</span><span class="about-stat-plus">+</span>
+            <span class="about-stat-label">完成项目</span>
+          </div>
+          <div class="about-stat reveal-up">
+            <span class="about-stat-num" data-count="8">0</span><span class="about-stat-plus">年</span>
+            <span class="about-stat-label">设计经验</span>
+          </div>
+          <div class="about-stat reveal-up">
+            <span class="about-stat-num" data-count="12">0</span><span class="about-stat-plus">项</span>
+            <span class="about-stat-label">设计大奖</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-content">
+        <div class="section-label reveal-text">
+          <span class="label-line"></span>
+          <span>About</span>
+        </div>
+        <h2 class="about-heading reveal-text">
+          <span>创意不止于</span><br>
+          <span class="text-accent">视觉</span>
+        </h2>
+        <div class="about-text reveal-up">
+          <p>拥有 8 年跨领域设计经验，专注于品牌视觉、UI/UX 设计与 3D 可视化。曾服务于多家国际品牌与科技企业，作品多次获得红点、iF 等国际设计大奖。</p>
+          <p>我相信好的设计是克制而有力的。每一个项目，我都追求在美学与功能之间找到完美的平衡点。</p>
+        </div>
+        <div class="about-skills reveal-up">
+          <div class="skill-row">
+            <span class="skill-label">品牌设计</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-label">UI/UX 设计</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-label">3D 建模 & 渲染</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-label">动态设计</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+          </div>
+        </div>
+        <div class="about-tools reveal-up">
+          <span>Figma</span><span>Photoshop</span><span>Illustrator</span>
+          <span>After Effects</span><span>Blender</span><span>Cinema 4D</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT CTA ==================== -->
+  <section class="section-contact" id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-heading reveal-text">
+        <span>Let's</span><br>
+        <span class="text-accent">Start</span><br>
+        <span>Something.</span>
+      </h2>
+      <a href="mailto:hello@studio.design" class="contact-email reveal-up">
+        hello@studio.design
+      </a>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-logo">SQ STUDIO</span>
+        <p>© 2025 SQ Studio. All rights reserved.</p>
+      </div>
+      <div class="footer-social">
+        <a href="#">Dribbble</a>
+        <a href="#">Behance</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-close" id="lightbox-close">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </div>
+    <div class="lightbox-content">
+      <img src="" alt="" id="lightbox-img">
+    </div>
+    <div class="lightbox-info" id="lightbox-info"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
