@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQ STUDIO — Creative Design Studio</title>
+  <meta name="description" content="SQ STUDIO — 品牌设计 · 独立站 · 视觉创意">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #fafafa;
+      color: #1a1a1a;
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    ::selection { background: rgba(0,0,0,0.08); color: #1a1a1a; }
+
+    /* ─── Custom Cursor ─── */
+    .cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      background: transparent;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: width 0.25s ease, height 0.25s ease, background 0.25s ease,
+                  border-color 0.25s ease, border-width 0.25s ease;
+    }
+    .cursor-dot.hover {
+      width: 70px; height: 70px;
+      background: rgba(99,102,241,0.15);
+      border: 2px solid rgba(99,102,241,0.5);
+      mix-blend-mode: normal;
+    }
+    .cursor-dot.clicking {
+      width: 60px; height: 60px;
+      background: rgba(99,102,241,0.25);
+      border: 2px solid rgba(99,102,241,0.7);
+      mix-blend-mode: normal;
+    }
+    @media (hover: hover) and (pointer: fine) { * { cursor: none !important; } }
+    @media (hover: none) and (pointer: coarse) { .cursor-dot { display: none !important; } }
+
+    /* ─── Layout ─── */
+    .container { max-width: 1360px; margin: 0 auto; padding: 0 40px; }
+    @media (max-width: 768px) { .container { padding: 0 24px; } }
+
+    /* ─── Sections ─── */
+    section { padding: 120px 0; }
+    @media (max-width: 768px) { section { padding: 80px 0; } }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 0;
+      mix-blend-mode: difference;
+      color: #fff;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav .logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: #fff;
+    }
+    nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    nav .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.03em;
+      transition: color 0.3s;
+    }
+    nav .nav-links a:hover { color: #fff; }
+
+    /* ─── Hero ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: #0f0f0f;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    #heroCanvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(to bottom, rgba(15,15,15,0.4) 0%, rgba(15,15,15,0.1) 50%, rgba(15,15,15,0.7) 100%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 120px 0 80px;
+      width: 100%;
+    }
+    .hero-location {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 10vw, 9rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      position: relative;
+    }
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+    .hero-title .line-inner {
+      display: block;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    .hero-title .line-inner.entered {
+      animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-title .line:nth-child(2) .line-inner.entered { animation-delay: 0.12s; }
+    .hero-title .line:nth-child(3) .line-inner.entered { animation-delay: 0.24s; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(100%); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-title .word {
+      display: inline-block;
+      transition: transform 0.15s ease-out;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 48px;
+    }
+    .hero-tags span {
+      padding: 6px 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 100px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+    }
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
+    }
+    .scroll-indicator span {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+    .scroll-indicator .line {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+    @media (max-width: 768px) {
+      .scroll-indicator { display: none; }
+    }
+
+    /* ─── Section Headers ─── */
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: rgba(0,0,0,0.25);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 64px;
+    }
+    .section-title.sm { font-size: clamp(1.4rem, 3vw, 2.8rem); }
+
+    /* ─── Work Grid ─── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: #e8e8e8;
+    }
+    .work-grid .item {
+      position: relative;
+      background: #fafafa;
+      overflow: hidden;
+    }
+    .work-grid .item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .work-grid .item:hover img { transform: scale(1.03); }
+    .work-grid .item .info {
+      padding: 28px 32px 36px;
+      background: #fafafa;
+    }
+    .work-grid .item .info .tag {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .work-grid .item .info h3 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .work-grid .item .info p {
+      font-size: 13px;
+      color: rgba(0,0,0,0.35);
+      line-height: 1.5;
+    }
+    .work-grid .item .info .arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(0,0,0,0.3);
+      text-decoration: none;
+      transition: color 0.3s, gap 0.3s;
+    }
+    .work-grid .item:hover .info .arrow {
+      color: #1a1a1a;
+      gap: 12px;
+    }
+    .work-grid .item.featured { grid-column: 1 / -1; }
+    .work-grid .item.featured img { max-height: 560px; object-fit: cover; }
+    @media (max-width: 768px) {
+      .work-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Split Text Section ─── */
+    .split-section {
+      padding: 160px 0;
+    }
+    .split-text {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .split-text .row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.3em;
+    }
+    .split-text .faded {
+      color: rgba(0,0,0,0.12);
+      font-weight: 700;
+    }
+
+    /* ─── Websites Grid ─── */
+    .websites-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      background: #e8e8e8;
+    }
+    .websites-grid .item {
+      background: #fafafa;
+      overflow: hidden;
+    }
+    .websites-grid .item img {
+      width: 100%;
+      aspect-ratio: 16/11;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .websites-grid .item:hover img { transform: scale(1.03); }
+    .websites-grid .item .info {
+      padding: 24px 28px 32px;
+    }
+    .websites-grid .item .info .tag {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .websites-grid .item .info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .websites-grid .item .info p {
+      font-size: 13px;
+      color: rgba(0,0,0,0.35);
+    }
+    @media (max-width: 768px) {
+      .websites-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Renders Grid ─── */
+    .renders-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      background: #e8e8e8;
+    }
+    .renders-grid .item {
+      position: relative;
+      background: #fafafa;
+      overflow: hidden;
+    }
+    .renders-grid .item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .renders-grid .item:hover img { transform: scale(1.05); }
+    .renders-grid .item .overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 28px 32px;
+      background: linear-gradient(to top, rgba(250,250,250,0.9) 0%, transparent 100%);
+    }
+    .renders-grid .item .overlay .tag {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(0,0,0,0.3);
+      text-transform: uppercase;
+    }
+    .renders-grid .item .overlay h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    @media (max-width: 768px) {
+      .renders-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── CTA / Contact ─── */
+    .cta-section {
+      padding: 160px 0 100px;
+      text-align: center;
+    }
+    .cta-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+    }
+    .cta-title .highlight {
+      display: block;
+      background: #1a1a1a;
+      color: #fafafa;
+      padding: 0.1em 0.2em;
+      margin-top: 0.1em;
+      display: inline-block;
+    }
+    .cta-email {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 500;
+      color: rgba(0,0,0,0.4);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      padding-bottom: 4px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .cta-email:hover {
+      color: #1a1a1a;
+      border-color: #1a1a1a;
+    }
+
+    /* ─── About ─── */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+    .about-content .right p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(0,0,0,0.45);
+      margin-bottom: 20px;
+    }
+    .about-content .right p strong {
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .about-stats .stat-num {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .about-stats .stat-label {
+      font-size: 12px;
+      color: rgba(0,0,0,0.3);
+      margin-top: 4px;
+    }
+    @media (max-width: 768px) {
+      .about-content { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      padding: 40px 0 60px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    footer .socials {
+      display: flex;
+      gap: 24px;
+    }
+    footer .socials a {
+      font-size: 13px;
+      color: rgba(0,0,0,0.25);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer .socials a:hover { color: #1a1a1a; }
+    footer .copy {
+      font-size: 12px;
+      color: rgba(0,0,0,0.15);
+    }
+    @media (max-width: 768px) {
+      footer .container { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    /* ─── Scroll Reveal ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+<!-- ===== Custom Cursor ===== -->
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="container">
+    <a href="#" class="logo">SQ.</a>
+    <div class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#websites">Websites</a>
+      <a href="#renders">3D</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <p class="hero-location">Based in Shanghai</p>
+    <h1 class="hero-title" id="heroTitle">
+      <span class="line"><span class="line-inner"><span class="word">We</span> <span class="word">Design</span></span></span>
+      <span class="line"><span class="line-inner"><span class="word">for</span> <span class="word">the</span></span></span>
+      <span class="line"><span class="line-inner"><span class="word">Next</span> <span class="word">Era</span></span></span>
+    </h1>
+    <div class="hero-tags">
+      <span>Brand Identity</span>
+      <span>Web Design</span>
+      <span>3D Visualization</span>
+      <span>UI/UX</span>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+
+<!-- ===== SELECTED WORKS ===== -->
+<section id="work">
+  <div class="container">
+    <div class="reveal">
+      <p class="section-label">Selected Works / 01</p>
+      <h2 class="section-title">Featured<br>Projects</h2>
+    </div>
+
+    <div class="work-grid">
+      <!-- Featured: Project 01 -->
+      <div class="item featured reveal">
+        <img src="assets/project-01.jpg" alt="Maison Lumière">
+        <div class="info">
+          <div class="tag">Brand Identity</div>
+          <h3>Maison Lumière 品牌升级</h3>
+          <p>法国奢侈生活方式品牌的全面视觉焕新，包含标识、包装与空间设计</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 02 -->
+      <div class="item reveal reveal-d1">
+        <img src="assets/project-02.jpg" alt="混凝土诗学">
+        <div class="info">
+          <div class="tag">Architecture</div>
+          <h3>混凝土诗学 · 建筑视觉</h3>
+          <p>建筑空间视觉表达</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 03 -->
+      <div class="item reveal reveal-d2">
+        <img src="assets/project-03.jpg" alt="Chronos 腕表">
+        <div class="info">
+          <div class="tag">Product</div>
+          <h3>Chronos 腕表视觉</h3>
+          <p>高端腕表产品视觉呈现</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 04 -->
+      <div class="item reveal reveal-d1">
+        <img src="assets/project-04.jpg" alt="暗夜高定">
+        <div class="info">
+          <div class="tag">Editorial</div>
+          <h3>暗夜高定 · 时装画册</h3>
+          <p>高级定制时装画册设计</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 05 -->
+      <div class="item reveal reveal-d2">
+        <img src="assets/project-05.jpg" alt="速度与影">
+        <div class="info">
+          <div class="tag">Automotive</div>
+          <h3>速度与影 · 概念车</h3>
+          <p>概念车视觉创意</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 06 -->
+      <div class="item reveal reveal-d3">
+        <img src="assets/project-06.jpg" alt="Nexus Lab">
+        <div class="info">
+          <div class="tag">Tech</div>
+          <h3>Nexus Lab · 科技品牌</h3>
+          <p>科技品牌视觉系统</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 07 -->
+      <div class="item reveal reveal-d4">
+        <img src="assets/project-07.jpg" alt="静寂空间">
+        <div class="info">
+          <div class="tag">Interior</div>
+          <h3>静寂 · 禅意空间</h3>
+          <p>空间设计视觉表达</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+
+      <!-- Project 08 -->
+      <div class="item reveal reveal-d5">
+        <img src="assets/project-08.jpg" alt="微醺美学">
+        <div class="info">
+          <div class="tag">Beverage</div>
+          <h3>微醺美学 · 精酿品牌</h3>
+          <p>精酿啤酒品牌设计</p>
+          <a href="#" class="arrow">View Project →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== SPLIT TEXT SECTION ===== -->
+<section class="split-section" id="websites">
+  <div class="container">
+    <p class="section-label reveal">Brand Websites / 02</p>
+    <div class="split-text reveal">
+      <div class="row">
+        <span>A&nbsp;Creative</span>
+        <span class="faded">Partner</span>
+      </div>
+      <div class="row">
+        <span>For&nbsp;Brands</span>
+      </div>
+      <div class="row">
+        <span>And</span>
+      </div>
+      <div class="row">
+        <span>Agencies</span>
+      </div>
+    </div>
+
+    <div class="websites-grid" style="margin-top: 80px;">
+      <div class="item reveal reveal-d1">
+        <img src="assets/website-01.jpg" alt="Maison Atelier">
+        <div class="info">
+          <div class="tag">E-commerce</div>
+          <h3>Maison Atelier</h3>
+          <p>奢侈品电商平台</p>
+        </div>
+      </div>
+      <div class="item reveal reveal-d2">
+        <img src="assets/website-02.jpg" alt="DataViz">
+        <div class="info">
+          <div class="tag">SaaS</div>
+          <h3>DataViz 数据分析</h3>
+          <p>企业级仪表盘设计</p>
+        </div>
+      </div>
+      <div class="item reveal reveal-d3">
+        <img src="assets/website-03.jpg" alt="Form Studio">
+        <div class="info">
+          <div class="tag">Portfolio</div>
+          <h3>Form Studio</h3>
+          <p>建筑事务所作品集</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 3D RENDERS ===== -->
+<section id="renders" style="padding-top: 0;">
+  <div class="container">
+    <p class="section-label reveal">3D Visualization / 03</p>
+    <h2 class="section-title sm reveal">Three<br>Dimensions</h2>
+
+    <div class="renders-grid">
+      <div class="item reveal reveal-d1">
+        <img src="assets/render-01.jpg" alt="陶瓷花瓶">
+        <div class="overlay">
+          <div class="tag">Product</div>
+          <h3>极简陶瓷花瓶系列</h3>
+        </div>
+      </div>
+      <div class="item reveal reveal-d2">
+        <img src="assets/render-02.jpg" alt="现代居所">
+        <div class="overlay">
+          <div class="tag">Interior</div>
+          <h3>现代主义居所</h3>
+        </div>
+      </div>
+      <div class="item reveal reveal-d3">
+        <img src="assets/render-03.jpg" alt="无线耳机">
+        <div class="overlay">
+          <div class="tag">Product</div>
+          <h3>无线降噪耳机</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="container">
+    <p class="section-label reveal">About / 04</p>
+    <div class="about-content">
+      <div class="left reveal">
+        <h2 class="section-title" style="margin-bottom: 0;">
+          Design<br>Beyond<br>Visuals
+        </h2>
+      </div>
+      <div class="right reveal reveal-d1">
+        <p>
+          <strong>8 years</strong> of cross-disciplinary design experience, specializing in brand identity, UI/UX design, and 3D visualization. I've had the privilege of working with international brands and tech companies.
+        </p>
+        <p>
+          I believe great design is <strong>restrained yet powerful</strong>. Every project finds the perfect balance between aesthetics and function.
+        </p>
+        <p>
+          Based in <strong>Shanghai</strong> — working with clients worldwide.
+        </p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-num">200+</div>
+            <div class="stat-label">Projects Completed</div>
+          </div>
+          <div>
+            <div class="stat-num">8</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div>
+            <div class="stat-num">15+</div>
+            <div class="stat-label">Awards</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== CTA / CONTACT ===== -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <h2 class="cta-title reveal">
+      Let's Start<br>
+      <span class="highlight">Something.</span>
+    </h2>
+    <div class="reveal reveal-d1">
+      <a href="mailto:hello@studio.design" class="cta-email">hello@studio.design →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="socials">
+      <a href="#">Dribbble</a>
+      <a href="#">Behance</a>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+    </div>
+    <div class="copy">&copy; 2026 SQ STUDIO — Shanghai</div>
+  </div>
+</footer>
+
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// ─── Hero Canvas Animation ───
+const canvas = document.getElementById('heroCanvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resizeCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// Geometric particles
+const PARTICLE_COUNT = 28;
+const particles = [];
+
+class Particle {
+  constructor() {
+    this.reset();
+  }
+  reset() {
+    this.size = 2 + Math.random() * 4;
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4 - 0.15;
+    this.life = 0.3 + Math.random() * 0.5;
+    this.maxLife = this.life;
+    this.shape = Math.random() > 0.5 ? 'circle' : 'diamond';
+    this.opacity = 0.2 + Math.random() * 0.35;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life -= 0.003;
+    if (this.life <= 0 || this.x < -50 || this.x > W + 50 || this.y < -50 || this.y > H + 50) {
+      this.reset();
+    }
+  }
+  draw() {
+    const alpha = this.opacity * (this.life / this.maxLife);
+    ctx.globalAlpha = alpha;
+
+    if (this.shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+    } else {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(Math.PI / 4);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+  }
+}
+
+// Gradient orbs
+const ORBS = 3;
+const orbs = [];
+
+class Orb {
+  constructor() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.r = 120 + Math.random() * 180;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    const colors = ['rgba(99,102,241,', 'rgba(139,92,246,', 'rgba(168,85,247,'];
+    this.color = colors[Math.floor(Math.random() * colors.length)];
+    this.pulse = Math.random() * Math.PI * 2;
+    this.pulseSpeed = 0.005 + Math.random() * 0.005;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.pulse += this.pulseSpeed;
+    if (this.x < -200 || this.x > W + 200) this.vx *= -1;
+    if (this.y < -200 || this.y > H + 200) this.vy *= -1;
+  }
+  draw() {
+    const pulseR = this.r + Math.sin(this.pulse) * 30;
+    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, pulseR);
+    gradient.addColorStop(0, this.color + '0.08)');
+    gradient.addColorStop(0.5, this.color + '0.04)');
+    gradient.addColorStop(1, this.color + '0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(this.x - pulseR, this.y - pulseR, pulseR * 2, pulseR * 2);
+  }
+}
+
+for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+for (let i = 0; i < ORBS; i++) orbs.push(new Orb());
+
+// Connection lines
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 180) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = `rgba(255,255,255,${0.04 * (1 - dist / 180)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateCanvas() {
+  ctx.clearRect(0, 0, W, H);
+  orbs.forEach(o => { o.update(); o.draw(); });
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  requestAnimationFrame(animateCanvas);
+}
+animateCanvas();
+
+// ─── Hero Title Entry Animation ───
+setTimeout(() => {
+  document.querySelectorAll('.hero-title .line-inner').forEach(el => {
+    el.classList.add('entered');
+  });
+}, 100);
+
+// ─── Mouse Parallax on Title Words ───
+const titleWords = document.querySelectorAll('.hero-title .word');
+let mouseX = 0, mouseY = 0;
+let targetX = 0, targetY = 0;
+
+document.querySelector('.hero').addEventListener('mousemove', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  targetX = (e.clientX / rect.width - 0.5) * 2;
+  targetY = (e.clientY / rect.height - 0.5) * 2;
+});
+
+function animateWords() {
+  mouseX += (targetX - mouseX) * 0.08;
+  mouseY += (targetY - mouseY) * 0.08;
+
+  titleWords.forEach((word, i) => {
+    const depth = 8 + (i % 3) * 6;
+    const x = mouseX * depth;
+    const y = mouseY * depth * 0.6;
+    word.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  requestAnimationFrame(animateWords);
+}
+animateWords();
+
+// ─── Custom Cursor ───
+const cursorDot = document.getElementById('cursorDot');
+if (cursorDot && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.addEventListener('mousemove', (e) => {
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+  });
+  document.addEventListener('mouseover', (e) => {
+    const t = e.target.closest('a, button, [role="button"]');
+    if (t) cursorDot.classList.add('hover');
+  });
+  document.addEventListener('mouseout', (e) => {
+    const t = e.target.closest('a, button, [role="button"]');
+    if (t) cursorDot.classList.remove('hover');
+  });
+  document.addEventListener('mousedown', () => cursorDot.classList.add('clicking'));
+  document.addEventListener('mouseup', () => cursorDot.classList.remove('clicking'));
+}
+
+// ─── Scroll Reveal ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
